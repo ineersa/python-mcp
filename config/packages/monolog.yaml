@@ -50,7 +50,7 @@ when@prod:
             nested:
                 type: rotating_file
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
-                level: info
-                max_files: 2
+                level: "%env(string:LOG_LEVEL)%"
+                max_files: 1
                 formatter: monolog.formatter.json_with_stacktraces
 

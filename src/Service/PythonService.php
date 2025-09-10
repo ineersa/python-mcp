@@ -14,9 +14,6 @@ namespace App\Service;
  * - The image python:3.11 will be pulled automatically if missing.
  */
 
-use React\EventLoop\LoopInterface;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
 use Symfony\Component\Process\Process;
 
 final class PythonService
@@ -48,7 +45,10 @@ final class PythonService
         $process->run();
 
         // Do not throw on non-zero exit: return combined outputs like the Python tool
-        return $process->getOutput().$process->getErrorOutput();
+        $combined = $process->getOutput().$process->getErrorOutput();
+        // Normalize trailing newline/carriage return added by Python print/terminal.
+        // We intentionally trim only CR/LF to keep spaces and other whitespace intact.
+        return rtrim($combined, "\r\n");
     }
 
     private function isDockerAvailable(): bool

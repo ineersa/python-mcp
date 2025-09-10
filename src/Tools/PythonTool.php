@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Tools;
 
 use App\Service\PythonService;
+use PhpMcp\Schema\Enum\LoggingLevel;
+use PhpMcp\Schema\Notification\LoggingMessageNotification;
 use PhpMcp\Schema\ToolAnnotations;
 use PhpMcp\Server\Attributes\McpTool;
+use PhpMcp\Server\Contracts\ServerTransportInterface;
 
 #[McpTool(
     name: 'python',
