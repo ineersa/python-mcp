@@ -18,5 +18,6 @@ COPY craft.yml .
 # You can tweak PHP/exts/libs here as envs too if you prefer
 ENV SPC_OPT_DOWNLOAD_ARGS="--ignore-cache-sources=php-src --retry 5 --prefer-pre-built"
 ENV SPC_OPT_BUILD_ARGS="--no-strip --disable-opcache-jit"
+
 RUN ./dist/static-php-cli/bin/spc doctor --auto-fix && \
-    ./dist/static-php-cli/bin/spc craft build -f craft.yml
+    ./dist/static-php-cli/bin/spc craft build --with-clean /go/src/app/craft.yml
