@@ -40,3 +40,4 @@ APP_BUILD_DIR="${HOME}/.symfony/python-mcp/build"
 APP_LOG_DIR="${HOME}/.symfony/python-mcp/log"
 ```
 
+## Installing and running MCP
