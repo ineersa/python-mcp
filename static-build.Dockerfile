@@ -7,9 +7,9 @@ COPY . .
 # Ensure system PHP used by Composer has ext-iconv
 RUN apk add --no-cache php84-iconv
 
-RUN apk add --no-cache libiconv-dev
-
 # Build the static binary
 WORKDIR /go/src/app/
 
-RUN EMBED=dist/app/ ./build-static.sh
+RUN PHP_EXTENSION_LIBS="bzip2,freetype,libavif,libjpeg,liblz4,libwebp,libzip,nghttp2,brotli,icu" \
+    EMBED=dist/app/ \
+    ./build-static.sh
