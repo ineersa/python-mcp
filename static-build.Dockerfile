@@ -8,7 +8,7 @@ COPY . .
 RUN apk add --no-cache php84-iconv
 
 # Caddy needs Go >= 1.25
-ENV GOTOOLCHAIN=go1.25+auto
+ENV GOTOOLCHAIN=go1.25.1+auto
 
 # Build the static binary
 WORKDIR /go/src/app/
