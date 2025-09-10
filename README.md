@@ -41,3 +41,9 @@ APP_LOG_DIR="${HOME}/.symfony/python-mcp/log"
 ```
 
 ## Installing and running MCP
+To generate binary run `./prepare_binary.sh`, it should work on Linux.
+
+Thanks to amazing projects like [Static PHP](https://static-php.dev/en/) and [FrankenPHP](https://frankenphp.dev/docs/embed/) we are able to run PHP applications as a single binary now.
+
+Easiest way is to just download binary from releases for your platform.
+

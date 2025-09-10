@@ -1,11 +1,14 @@
 name: python-mcp
-sapi: cli
+sapi:
+    - cli
+    - micro
 php_version: "8.4"
 extensions:
     - ctype
     - filter
     - iconv
     - xml
+    - zip
 libs:
     - brotli
     - libavif
@@ -16,8 +19,6 @@ libs:
     - nghttp2
     - icu
 entry: bin/python-mcp
-embed:
-    - dist/app
 # optional:
 # ini:
 #   - memory_limit=256M

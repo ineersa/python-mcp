@@ -29,7 +29,7 @@ docker build -t static-app -f static-build.Dockerfile .
 
 mkdir -p ./dist
 docker create --name static-app-tmp static-app
-docker cp static-app-tmp:/go/src/app/dist/. dist/
+docker cp static-app-tmp:/work/dist/. dist/
 docker rm static-app-tmp
 
 cp -r ./dist "${PROJECT_DIR}"
