@@ -20,10 +20,10 @@ rm -Rf ./dist/
 rm ./bin/phpunit
 
 # Install the dependencies
-composer install --ignore-platform-reqs --no-dev -a
+/usr/bin/php8.4 /usr/local/bin/composer install --no-interaction --quiet --ignore-platform-reqs --no-dev -a
 
 # Optimize .env
-composer dump-env prod
+/usr/bin/php8.4 /usr/local/bin/composer dump-env --no-interaction --quiet prod
 
 docker build -t static-app -f static-build.Dockerfile .
 
