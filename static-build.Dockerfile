@@ -1,20 +1,22 @@
 FROM dunglas/frankenphp:static-builder
 
-# Copy your app
-WORKDIR /go/src/app/dist/app
-COPY . .
-
-# Ensure system PHP used by Composer has ext-iconv
+# For composer-in-build (your previous fix)
 RUN apk add --no-cache php84-iconv
 
-# Caddy needs Go >= 1.25
-ENV GOTOOLCHAIN=go1.25.1+auto
+WORKDIR /go/src/app
+COPY . .
 
-RUN go env -w GOTOOLCHAIN=go1.25.1+auto
+# Use SPC from source (already in the builder image path your script uses)
+#WORKDIR /go/src/app/dist/static-php-cli
+#RUN git pull || true
+#RUN composer install --no-dev -a --no-interaction
 
-# Build the static binary
-WORKDIR /go/src/app/
+# Build single-file CLI
+#WORKDIR /go/src/app
+#COPY craft.yml .
 
-RUN PHP_EXTENSION_LIBS="bzip2,freetype,libavif,libjpeg,liblz4,libwebp,libzip,nghttp2,brotli,icu" \
-    EMBED=dist/app/ \
-    ./build-static.sh
+# You can tweak PHP/exts/libs here as envs too if you prefer
+ENV SPC_OPT_DOWNLOAD_ARGS="--ignore-cache-sources=php-src --retry 5 --prefer-pre-built"
+ENV SPC_OPT_BUILD_ARGS="--no-strip --disable-opcache-jit"
+RUN ./dist/static-php-cli/bin/spc doctor --auto-fix && \
+    ./dist/static-php-cli/bin/spc craft build -f craft.yml
