@@ -17,6 +17,8 @@ echo APP_DEBUG=0 >> .env.local
 rm -Rf ./tests/
 rm -Rf ./var/
 rm -Rf ./dist/
+rm ./bin/console
+rm ./bin/phpunit
 
 # Install the dependencies
 composer install --ignore-platform-reqs --no-dev -a
