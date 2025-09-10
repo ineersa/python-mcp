@@ -7,13 +7,13 @@ WORKDIR /go/src/app
 COPY . .
 
 # Use SPC from source (already in the builder image path your script uses)
-#WORKDIR /go/src/app/dist/static-php-cli
-#RUN git pull || true
-#RUN composer install --no-dev -a --no-interaction
+WORKDIR /go/src/app/dist/static-php-cli
+RUN git pull || true
+RUN composer install --no-dev -a --no-interaction
 
 # Build single-file CLI
-#WORKDIR /go/src/app
-#COPY craft.yml .
+WORKDIR /go/src/app
+COPY craft.yml .
 
 # You can tweak PHP/exts/libs here as envs too if you prefer
 ENV SPC_OPT_DOWNLOAD_ARGS="--ignore-cache-sources=php-src --retry 5 --prefer-pre-built"
