@@ -20,4 +20,4 @@ ENV SPC_OPT_DOWNLOAD_ARGS="--ignore-cache-sources=php-src --retry 5 --prefer-pre
 ENV SPC_OPT_BUILD_ARGS="--no-strip --disable-opcache-jit"
 
 RUN ./dist/static-php-cli/bin/spc doctor --auto-fix && \
-    ./dist/static-php-cli/bin/spc craft build --with-clean /go/src/app/craft.yml
+    ./dist/static-php-cli/bin/spc craft --with-clean /go/src/app/craft.yml
