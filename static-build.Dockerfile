@@ -7,6 +7,9 @@ COPY . .
 # Ensure system PHP used by Composer has ext-iconv
 RUN apk add --no-cache php84-iconv
 
+# Caddy needs Go >= 1.25
+ENV GOTOOLCHAIN=go1.25+auto
+
 # Build the static binary
 WORKDIR /go/src/app/
 
