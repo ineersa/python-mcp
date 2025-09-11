@@ -1,0 +1,9 @@
+/.git
+/.github
+/var/*
+/node_modules
+/tests
+/.idea
+/.vscode
+.DS_Store
+/dist/*

@@ -65,6 +65,9 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
+        "post-autoload-dump": [
+            "@auto-scripts"
+        ],
         "cs-fix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php",
         "phpstan": "vendor/bin/phpstan analyse -c phpstan.dist.neon",
         "tests": "vendor/bin/phpunit --colors=always --testdox"

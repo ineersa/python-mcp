@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Tools\PythonTool;
 use PhpMcp\Schema\ServerCapabilities;
+use PhpMcp\Schema\ToolAnnotations;
 use PhpMcp\Server\Server;
 use PhpMcp\Server\Transports\StdioServerTransport;
 use Psr\Container\ContainerInterface;
@@ -43,6 +45,10 @@ class PythonMcpCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
+            $description = <<<DESC
+Use this tool to execute Python code in your chain of thought. The code will not be shown to the user. This tool should be used for internal reasoning, but not for code that is intended to be visible to the user (e.g. when creating plots, tables, or files).
+When you send a message containing python code to python, it will be executed in a stateless docker container, and the stdout of that process will be returned to you.
+DESC;
             // Build server configuration
             $server = Server::make()
                 ->withServerInfo(
@@ -61,12 +67,20 @@ class PythonMcpCommand extends Command
                         logging: false, // TODO add somehow?
                     )
                 )
+                ->withTool(
+                    handler: PythonTool::class,
+                    name: 'python',
+                    description: $description,
+                    annotations: new ToolAnnotations(
+                        title: 'Execute Python code',
+                    )
+                )
                 ->build();
 
             // Discover MCP elements via attributes
-            $server->discover(
-                basePath: $this->toolsDir,
-            );
+//            $server->discover(
+//                basePath: $this->toolsDir,
+//            );
 
             // Start listening via stdio transport
             $transport = new StdioServerTransport();
