@@ -46,6 +46,7 @@ final class PythonService
 
         // Do not throw on non-zero exit: return combined outputs like the Python tool
         $combined = $process->getOutput().$process->getErrorOutput();
+
         // Normalize trailing newline/carriage return added by Python print/terminal.
         // We intentionally trim only CR/LF to keep spaces and other whitespace intact.
         return rtrim($combined, "\r\n");

@@ -5,19 +5,16 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Tools\PythonTool;
-use PhpMcp\Schema\ServerCapabilities;
-use PhpMcp\Schema\ToolAnnotations;
-use PhpMcp\Server\Server;
-use PhpMcp\Server\Transports\StdioServerTransport;
+use Mcp\Schema\ToolAnnotations;
+use Mcp\Server;
+use Mcp\Server\Transport\StdioTransport;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 #[AsCommand(
     name: 'python-mcp',
@@ -27,10 +24,7 @@ class PythonMcpCommand extends Command
 {
     public function __construct(
         private LoggerInterface $logger,
-        private CacheInterface $cache,
         private ContainerInterface $container,
-        #[Autowire('%kernel.project_dir%/src/Tools')]
-        private readonly string $toolsDir,
     ) {
         parent::__construct();
     }
@@ -56,17 +50,7 @@ DESC;
                     version: '0.0.1'
                 )
                 ->withLogger($this->logger)
-                ->withCache($this->cache)
                 ->withContainer($this->container)
-                ->withCapabilities(
-                    ServerCapabilities::make(
-                        tools: true,
-                        toolsListChanged: false,
-                        resources: false,
-                        prompts: false,
-                        logging: false, // TODO add somehow?
-                    )
-                )
                 ->withTool(
                     handler: PythonTool::class,
                     name: 'python',
@@ -77,15 +61,11 @@ DESC;
                 )
                 ->build();
 
-            // Discover MCP elements via attributes
-//            $server->discover(
-//                basePath: $this->toolsDir,
-//            );
+            $transport = new StdioTransport(
+                logger: $this->logger,
+            );
 
-            // Start listening via stdio transport
-            $transport = new StdioServerTransport();
-            $transport->setLogger($this->logger);
-            $server->listen($transport);
+            $server->connect($transport);
         } catch (\Throwable $e) {
             $this->logger->error($e->getMessage(), [
                 'trace' => $e->getTrace(),

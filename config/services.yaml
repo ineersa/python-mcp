@@ -23,12 +23,6 @@ services:
             $defaultLifetime: 0
             $storeSerialized: true
 
-    cache.psr16:
-        class: Symfony\Component\Cache\Psr16Cache
-        arguments:
-            - '@cache.array_adapter'
-
-    Psr\SimpleCache\CacheInterface: '@cache.psr16'
     Psr\Container\ContainerInterface: '@service_container'
 
     # add more service definitions when explicit configuration is needed

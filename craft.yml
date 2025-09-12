@@ -9,6 +9,7 @@ extensions:
     - iconv
     - xml
     - phar
+    - fileinfo
 libs:
     - brotli
     - libavif
@@ -18,9 +19,6 @@ libs:
     - libzip
     - nghttp2
     - icu
-entry: bin/python-mcp
 # optional:
 # ini:
 #   - memory_limit=256M
-env:
-    APP_ENV=prod

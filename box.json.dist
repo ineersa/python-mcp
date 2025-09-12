@@ -1,5 +1,5 @@
 {
-    "output": "dist/app.phar",
+    "output": "dist/python-mcp.phar",
 
     "main": "bin/python-mcp",
 
