@@ -19,5 +19,6 @@ docker rm static-app-tmp
 
 cp -r ./dist "${PROJECT_DIR}"
 
+rm -Rf /tmp/python-mcp
 
 

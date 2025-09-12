@@ -51,7 +51,7 @@ Underneath it's just Symfony CLI application, so typical ENV variables can be us
 ### Set log level, default INFO, with log action level ERROR
 LOG_LEVEL=info
 # Where to store logs
-APP_LOG_DIR="${HOME}/.symfony/python-mcp/log"
+APP_LOG_DIR="/tmp/mcp/python-mcp/log"
 ```
 
 ## Development
