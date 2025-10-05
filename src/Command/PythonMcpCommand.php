@@ -15,6 +15,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 #[AsCommand(
     name: 'python-mcp',
@@ -25,6 +26,8 @@ class PythonMcpCommand extends Command
     public function __construct(
         private LoggerInterface $logger,
         private ContainerInterface $container,
+        #[Autowire('%kernel.project_dir%')]
+        private string $projectDir,
     ) {
         parent::__construct();
     }
@@ -39,26 +42,15 @@ class PythonMcpCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            $description = <<<DESC
-Use this tool to execute Python code in your chain of thought. The code will not be shown to the user. This tool should be used for internal reasoning, but not for code that is intended to be visible to the user (e.g. when creating plots, tables, or files).
-When you send a message containing python code to python, it will be executed in a stateless docker container, and the stdout of that process will be returned to you.
-DESC;
             // Build server configuration
-            $server = Server::make()
-                ->withServerInfo(
+            $server = Server::builder()
+                ->setServerInfo(
                     name: 'python',
                     version: '0.0.1'
                 )
-                ->withLogger($this->logger)
-                ->withContainer($this->container)
-                ->withTool(
-                    handler: PythonTool::class,
-                    name: 'python',
-                    description: $description,
-                    annotations: new ToolAnnotations(
-                        title: 'Execute Python code',
-                    )
-                )
+                ->setLogger($this->logger)
+                ->setContainer($this->container)
+                ->setDiscovery($this->projectDir.'/src/Tools')
                 ->build();
 
             $transport = new StdioTransport(
@@ -66,6 +58,7 @@ DESC;
             );
 
             $server->connect($transport);
+            $transport->listen();
         } catch (\Throwable $e) {
             $this->logger->error($e->getMessage(), [
                 'trace' => $e->getTrace(),

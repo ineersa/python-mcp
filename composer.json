@@ -9,14 +9,20 @@
             "email": "ineersa@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ineersa/php-sdk"
+        }
+    ],
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-fileinfo": "*",
-        "mcp/sdk": "dev-main@dev",
+        "mcp/sdk": "dev-phar-realpath@dev",
         "symfony/cache": "7.3.*",
         "symfony/console": "7.3.*",
         "symfony/dotenv": "7.3.*",
@@ -83,9 +89,9 @@
         }
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.87.2",
-        "phpstan/phpstan": "^2.1.23",
-        "phpunit/phpunit": "^12.3.10",
+        "friendsofphp/php-cs-fixer": "^3.88.2",
+        "phpstan/phpstan": "^2.1.30",
+        "phpunit/phpunit": "^12.4.0",
         "symfony/maker-bundle": "^1.64",
         "symfony/var-dumper": "7.3.*"
     }
