@@ -10,6 +10,7 @@ extensions:
     - xml
     - phar
     - fileinfo
+    - tokenizer
 libs:
     - brotli
     - libavif

@@ -4,6 +4,8 @@ RUN apk add --no-cache php84-iconv
 
 RUN apk add --no-cache php84-fileinfo
 
+RUN apk add --no-cache php84-tokenizer
+
 WORKDIR /go/src/app/dist/static-php-cli
 RUN git pull || true
 RUN composer install --no-dev -a --no-interaction
